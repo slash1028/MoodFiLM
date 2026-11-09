@@ -11,7 +11,7 @@
 
 ## Restore dependencies
 
-Run `python restore_weights.py` to reconstruct the three representative checkpoints from repository parts; it verifies SHA-256. Consult `WEIGHTS.md` for provenance. Create a Python environment compatible with the Qwen2.5-Omni training code (the source run used Python 3.10, PyTorch, torchaudio, transformers, PEFT and DeepSpeed). Match CUDA/PyTorch/transformers versions to the new GPUs and verify imports. The old `/n/work3/huang/...` Python path is **not** a new-cluster dependency. Use `PYTHON_BIN=/absolute/path/to/your/env/bin/python` for shell wrappers or invoke that Python directly. Set `NCCL_IB_DISABLE=1 NCCL_NET=Socket` if the new node's InfiniBand path is unstable; test the network backend before a long run.
+Run `python restore_weights.py` to reconstruct the three representative checkpoints from repository parts; it verifies SHA-256. Consult `WEIGHTS.md` for provenance. Rebuild and check the Python/CUDA environment using `ENVIRONMENT.md` before a GPU job. The old `/n/work3/huang/...` Python path is **not** a new-cluster dependency. Use `PYTHON_BIN=/absolute/path/to/your/env/bin/python` for shell wrappers or invoke that Python directly. Set `NCCL_IB_DISABLE=1 NCCL_NET=Socket` if the new node's InfiniBand path is unstable; test the network backend before a long run.
 
 Populate these paths under the clone (or use symlinks to authorized storage):
 

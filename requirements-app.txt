@@ -1,0 +1,18 @@
+# Install matching torch/torchaudio/torchvision first; see ENVIRONMENT.md.
+accelerate==1.13.0
+av==17.0.1
+datasets==4.8.4
+deepspeed==0.18.9
+einops==0.8.2
+librosa==0.11.0
+numpy==2.2.6
+pandas==2.3.3
+peft==0.18.1
+pillow==12.1.1
+qwen-omni-utils==0.0.9
+safetensors==0.7.0
+scikit-learn==1.7.2
+scipy==1.15.3
+sentence-transformers==5.4.0
+soundfile==0.13.1
+transformers==5.5.3

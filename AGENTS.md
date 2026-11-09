@@ -1,6 +1,6 @@
 # Agent handoff
 
-Read `HANDOFF.md`, `DATASETS.md`, and `WEIGHTS.md` before changing code or launching training. This repository carries three lightweight checkpoints as parts; run `python restore_weights.py`. It omits the large base model, licensed datasets and caches. Never infer that a preflight succeeded merely because imports work: check all split files, model shards, adapters, audio-cache keys, and a real training/inference batch.
+Read `HANDOFF.md`, `ENVIRONMENT.md`, `DATASETS.md`, and `WEIGHTS.md` before changing code or launching training. This repository carries three lightweight checkpoints as parts; run `python restore_weights.py`. It omits the large base model, licensed datasets and caches. Never infer that a preflight succeeded merely because imports work: check all split files, model shards, adapters, audio-cache keys, and a real training/inference batch.
 
 Keep generated data, logs, model weights, and caches out of Git. Preserve original split/session IDs and sample IDs. In MSP-IMPROV, `provisional_dialogues.jsonl` is an approximation with unresolved chronology; do not silently convert it to verified dialogue order. In MELD, predicted dialogue personality is an offline full-dialogue feature and may include future turns. Do not report placeholder personality CCC as ground-truth performance.
 

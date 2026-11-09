@@ -1,6 +1,6 @@
 # MoodFiLM research code archive
 
-This is the portable **code** snapshot for two-stage personality-aware emotion recognition. It contains the IEMOCAP/MELD trainer under `portable/` and the MSP-IMPROV adaptation under `msp_improv/`. Start with [HANDOFF.md](HANDOFF.md) on a new cluster. Dataset preparation and the expected local directory tree are in [DATASETS.md](DATASETS.md).
+This is the portable **code** snapshot for two-stage personality-aware emotion recognition. It contains the IEMOCAP/MELD trainer under `portable/` and the MSP-IMPROV adaptation under `msp_improv/`. Start with [HANDOFF.md](HANDOFF.md) on a new cluster. Environment setup is in [ENVIRONMENT.md](ENVIRONMENT.md); dataset preparation and the expected local directory tree are in [DATASETS.md](DATASETS.md).
 
 Three representative lightweight checkpoints are stored as 4 MiB parts in `weights_parts/`; run `python restore_weights.py` after cloning and verify them against [WEIGHTS.md](WEIGHTS.md). Qwen2.5-Omni-7B base weights, licensed datasets, precomputed audio features, and experiment outputs are absent. Restore these separately before a GPU run. This archive is not a self-contained reproduction of historical scores.
 
