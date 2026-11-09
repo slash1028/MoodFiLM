@@ -36,9 +36,6 @@ def main() -> None:
     parser.add_argument("--check-cache-hash", action="store_true", help="Read the 1.7 GB mel cache")
     args = parser.parse_args()
     asset_root = args.asset_root.resolve()
-    if not INDEX.is_file():
-        raise SystemExit("Local split index missing. Restore authorized old data, then run scripts/make_iemocap_split_index.py --source-root portable")
-    index = json.loads(INDEX.read_text())
     if args.download_ocean and not OCEAN.is_file():
         OCEAN.parent.mkdir(parents=True, exist_ok=True)
         data = urlopen(OCEAN_URL, timeout=30).read()
@@ -47,6 +44,9 @@ def main() -> None:
         OCEAN.write_bytes(data)
     if not OCEAN.is_file() or sha(OCEAN) != OCEAN_SHA:
         raise SystemExit("Missing or changed official ocean.csv; use --download-ocean")
+    if not INDEX.is_file():
+        raise SystemExit("Official ocean.csv verified. Local split index missing; restore authorized old data, then run scripts/make_iemocap_split_index.py --source-root portable")
+    index = json.loads(INDEX.read_text())
     ocean = {}
     with OCEAN.open(newline="", encoding="utf-8") as stream:
         for row in csv.DictReader(stream):
