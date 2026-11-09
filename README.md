@@ -4,7 +4,7 @@ This is the portable **code** snapshot for two-stage personality-aware emotion r
 
 For the archived IEMOCAP ERC checkpoint and its GT-personality evaluation protocol, see [IEMOCAP_REPRO.md](IEMOCAP_REPRO.md).
 
-Three representative lightweight checkpoints are stored as 4 MiB parts in `weights_parts/`; run `python restore_weights.py` after cloning and verify them against [WEIGHTS.md](WEIGHTS.md). Qwen2.5-Omni-7B base weights, licensed datasets, precomputed audio features, and experiment outputs are absent. Restore these separately before a GPU run. This archive is not a self-contained reproduction of historical scores.
+Three representative lightweight checkpoints are stored as 4 MiB parts in `weights_parts/`; run `python restore_weights.py` after cloning and verify them against [WEIGHTS.md](WEIGHTS.md). The authorized IEMOCAP training/validation/test JSONL files, original `iemocap.pkl` split source, and public PA-IEMOCAP `ocean.csv` are included for the 74.759 checkpoint evaluation. Qwen2.5-Omni-7B base weights, IEMOCAP raw media, the 1.7 GB native mel cache, other datasets and experiment outputs are absent. Rebuild the mel cache using [IEMOCAP_REPRO.md](IEMOCAP_REPRO.md) before evaluation.
 
 The MSP stage uses a **provisional** dialogue order. Its turn ties and speaker-role assumptions must be audited before treating its ERC scores as chronological dialogue-level results. Stage2 currently computes test metrics every epoch; use validation for model selection in a publication-grade comparison.
 

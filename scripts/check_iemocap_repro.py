@@ -6,11 +6,13 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import re
+import shutil
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "repro/iemocap_split_index.json"
 OCEAN = ROOT / "portable/datasets/PA-IEMOCAP/ocean.csv"
+BUNDLED_OCEAN = ROOT / "third_party/PA-IEMOCAP/ocean.csv"
 OCEAN_URL = "https://raw.githubusercontent.com/Kyoto-University-Speech-and-Audio/PA-IEMOCAP/main/ocean.csv"
 OCEAN_SHA = "4772bdc9f013a3d6c4e8b038e559c5633092ce68e5edb3fed0aef99e4f9689ec"
 
@@ -30,12 +32,18 @@ def normalized(dialogue: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--download-ocean", action="store_true")
+    parser.add_argument("--install-ocean", action="store_true", help="Copy the verified bundled PA-IEMOCAP labels to the historical data path")
     parser.add_argument("--require-data", action="store_true")
     parser.add_argument("--asset-root", type=Path, default=ROOT / "portable",
                         help="Portable directory holding the licensed prepared data and audio cache")
     parser.add_argument("--check-cache-hash", action="store_true", help="Read the 1.7 GB mel cache")
     args = parser.parse_args()
     asset_root = args.asset_root.resolve()
+    if args.install_ocean and not OCEAN.is_file():
+        if not BUNDLED_OCEAN.is_file() or sha(BUNDLED_OCEAN) != OCEAN_SHA:
+            raise SystemExit("Bundled PA-IEMOCAP file missing or changed")
+        OCEAN.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(BUNDLED_OCEAN, OCEAN)
     if args.download_ocean and not OCEAN.is_file():
         OCEAN.parent.mkdir(parents=True, exist_ok=True)
         data = urlopen(OCEAN_URL, timeout=30).read()
@@ -43,7 +51,7 @@ def main() -> None:
             raise SystemExit("Official PA-IEMOCAP file changed; inspect it before use")
         OCEAN.write_bytes(data)
     if not OCEAN.is_file() or sha(OCEAN) != OCEAN_SHA:
-        raise SystemExit("Missing or changed official ocean.csv; use --download-ocean")
+        raise SystemExit("Missing or changed official ocean.csv; use --install-ocean or --download-ocean")
     if not INDEX.is_file():
         raise SystemExit("Official ocean.csv verified. Local split index missing; restore authorized old data, then run scripts/make_iemocap_split_index.py --source-root portable")
     index = json.loads(INDEX.read_text())

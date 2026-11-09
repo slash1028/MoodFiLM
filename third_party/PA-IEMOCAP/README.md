@@ -1,0 +1,1 @@
+`ocean.csv` comes from the [PA-IEMOCAP repository](https://github.com/Kyoto-University-Speech-and-Audio/PA-IEMOCAP). It is distributed under the accompanying MIT license. SHA-256: `4772bdc9f013a3d6c4e8b038e559c5633092ce68e5edb3fed0aef99e4f9689ec`.

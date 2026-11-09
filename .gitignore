@@ -3,9 +3,17 @@ __pycache__/
 .cache/
 dataset/
 portable/LLM_bases/
-portable/data/
+portable/data/*
+!portable/data/iemocap/
+portable/data/iemocap/*
+!portable/data/iemocap/train.json
+!portable/data/iemocap/valid.json
+!portable/data/iemocap/test.json
 portable/datasets/
-portable/original_data/
+portable/original_data/*
+!portable/original_data/iemocap/
+portable/original_data/iemocap/*
+!portable/original_data/iemocap/iemocap.pkl
 portable/env/
 portable/runs/
 portable/meld_dialogue_sweeps/
@@ -18,6 +26,7 @@ msp_improv/stage2_runs/
 msp_improv/utterances.jsonl
 msp_improv/provisional_dialogues.jsonl
 *.pkl
+!portable/original_data/iemocap/iemocap.pkl
 *.safetensors
 *.zip
 *.log

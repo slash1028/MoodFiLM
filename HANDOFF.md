@@ -20,9 +20,9 @@ portable/LLM_bases/Qwen2.5-Omni-7B/          # full model + processor/tokenizer
 portable/dialogue_personality/checkpoint_07648/ # IEMOCAP Stage1 adapter
 portable/adapters/iemocap/                  # if reusing archived ERC adapter
 portable/adapters/meld/                     # if reusing archived ERC adapter
-portable/original_data/iemocap/             # iemocap.pkl + native mel cache
+portable/original_data/iemocap/             # iemocap.pkl included; regenerate native mel cache
 portable/original_data/meld/                # native mel, 8-24 token cache, PELD map
-portable/data/iemocap/{train,valid,test}.json
+portable/data/iemocap/{train,valid,test}.json # included for archived ERC evaluation
 portable/data/meld/{train,valid,test}.json
 dataset/MSP-IMPROV/                          # raw MSP files; see DATASETS.md
 ```
