@@ -43,20 +43,31 @@ def main():
                 'audio_feature_pkl', 'audio_iemocap_pkl', 'checkpoint_dir']:
         if cfg.get(key):
             path = (ROOT/cfg[key]).resolve()
-            if not path.is_relative_to(ROOT) or not path.exists():
-                errors.append(f'{key}: missing/nonlocal {path}')
+            if not path.exists():
+                errors.append(f'{key}: missing {path}')
             cfg[key] = str(path)
     for split in ['train', 'valid', 'test']:
         path = Path(cfg['data_dir'])/f'{split}.json'
-        records = json.loads(path.read_text())
-        print(f'{opt.dataset} {split}: {len(records)} records')
+        if not path.is_file():
+            errors.append(f'Missing split: {path}')
+            continue
+        try:
+            with path.open(encoding='utf-8') as stream:
+                count = sum(1 for line in stream if line.strip() and json.loads(line))
+            print(f'{opt.dataset} {split}: {count} JSONL records')
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f'Invalid JSONL split {path}: {exc}')
     for folder in [ROOT/'adapters'/opt.dataset] + ([Path(cfg['checkpoint_dir'])] if cfg.get('checkpoint_dir') else []):
         if not any((folder/filename).is_file() for filename in ('trainable_model.safetensors', 'adapter_model.safetensors')):
             errors.append(f'Missing lightweight checkpoint in {folder}')
     model = Path(cfg['model_name_or_path'])
-    index = json.loads((model/'model.safetensors.index.json').read_text())
-    for shard in set(index['weight_map'].values()):
-        if not (model/shard).is_file(): errors.append(f'Missing base-model shard: {shard}')
+    index_path = model/'model.safetensors.index.json'
+    if index_path.is_file():
+        index = json.loads(index_path.read_text())
+        for shard in set(index['weight_map'].values()):
+            if not (model/shard).is_file(): errors.append(f'Missing base-model shard: {shard}')
+    else:
+        errors.append(f'Missing base-model index: {index_path}')
     ids = opt.gpus.split(',') if opt.gpus else ['0']
     if len(set(ids)) != len(ids) or not all(x.isdigit() for x in ids):
         errors.append('GPU IDs must be unique nonnegative integers')

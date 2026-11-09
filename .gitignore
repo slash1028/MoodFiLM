@@ -21,3 +21,4 @@ msp_improv/provisional_dialogues.jsonl
 *.safetensors
 *.zip
 *.log
+repro/iemocap_split_index.json

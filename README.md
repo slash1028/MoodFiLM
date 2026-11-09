@@ -2,6 +2,8 @@
 
 This is the portable **code** snapshot for two-stage personality-aware emotion recognition. It contains the IEMOCAP/MELD trainer under `portable/` and the MSP-IMPROV adaptation under `msp_improv/`. Start with [HANDOFF.md](HANDOFF.md) on a new cluster. Environment setup is in [ENVIRONMENT.md](ENVIRONMENT.md); dataset preparation and the expected local directory tree are in [DATASETS.md](DATASETS.md).
 
+For the archived IEMOCAP ERC checkpoint and its GT-personality evaluation protocol, see [IEMOCAP_REPRO.md](IEMOCAP_REPRO.md).
+
 Three representative lightweight checkpoints are stored as 4 MiB parts in `weights_parts/`; run `python restore_weights.py` after cloning and verify them against [WEIGHTS.md](WEIGHTS.md). Qwen2.5-Omni-7B base weights, licensed datasets, precomputed audio features, and experiment outputs are absent. Restore these separately before a GPU run. This archive is not a self-contained reproduction of historical scores.
 
 The MSP stage uses a **provisional** dialogue order. Its turn ties and speaker-role assumptions must be audited before treating its ERC scores as chronological dialogue-level results. Stage2 currently computes test metrics every epoch; use validation for model selection in a publication-grade comparison.
